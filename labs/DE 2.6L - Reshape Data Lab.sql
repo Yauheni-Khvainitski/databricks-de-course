@@ -175,47 +175,6 @@ OR REPLACE TEMP VIEW events_pivot_sql_v2 AS
 
 -- COMMAND ----------
 
-CREATE
-OR REPLACE TEMP VIEW events_pivot_sql AS
-SELECT
-  *
-FROM
-  (
-    SELECT
-      user_id AS user,
-      event_name
-    FROM
-      spark_catalog.euheniy_khvoinitski_5nea_da_dewd.events
-  ) PIVOT (
-    COUNT(*) FOR event_name IN (
-      'cart',
-      'pillows',
-      'login',
-      'main',
-      'careers',
-      'guest',
-      'faq',
-      'down',
-      'warranty',
-      'finalize',
-      'register',
-      'shipping_info',
-      'checkout',
-      'mattresses',
-      'add_item',
-      'press',
-      'email_coupon',
-      'cc_info',
-      'foam',
-      'reviews',
-      'original',
-      'delivery',
-      'premium'
-    )
-  );
-
--- COMMAND ----------
-
 -- DBTITLE 0,--i18n-afd696e4-049d-47e1-b266-60c7310b169a
 -- MAGIC %md
 -- MAGIC
@@ -302,8 +261,17 @@ FROM
 -- COMMAND ----------
 
 -- SELECT * FROM transactions limit 10;
-
-select user_id, count(*) from transactions group by user_id having count(*) > 1 limit 10
+select
+  user_id,
+  count(*)
+from
+  transactions
+group by
+  user_id
+having
+  count(*) > 1
+limit
+  10
 
 -- COMMAND ----------
 
