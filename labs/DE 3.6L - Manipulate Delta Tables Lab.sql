@@ -94,6 +94,13 @@ WHEN NOT MATCHED AND b.delicious = true THEN
 
 -- COMMAND ----------
 
+SELECT
+  *
+FROM
+  hive_metastore.euheniy_khvoinitski_5nea_da_dewd.beans;
+
+-- COMMAND ----------
+
 -- DBTITLE 0,--i18n-bf6ff074-4166-4d51-92e5-67e7f2084c9b
 -- MAGIC %md
 -- MAGIC
@@ -107,8 +114,7 @@ WHEN NOT MATCHED AND b.delicious = true THEN
 
 -- COMMAND ----------
 
--- TODO
-<FILL-IN>
+DESCRIBE HISTORY hive_metastore.euheniy_khvoinitski_5nea_da_dewd.beans;
 
 -- COMMAND ----------
 
@@ -150,7 +156,10 @@ WHEN NOT MATCHED AND b.delicious = true THEN
 
 -- COMMAND ----------
 
-SELECT * FROM beans VERSION AS OF 1
+SELECT
+  *
+FROM
+  beans VERSION AS OF 1
 
 -- COMMAND ----------
 
@@ -162,7 +171,10 @@ SELECT * FROM beans VERSION AS OF 1
 
 -- COMMAND ----------
 
-SELECT * FROM beans
+SELECT
+  *
+FROM
+  beans
 
 -- COMMAND ----------
 
@@ -176,13 +188,19 @@ SELECT * FROM beans
 
 -- COMMAND ----------
 
--- TODO
-CREATE OR REPLACE TEMP VIEW pre_delete_vw AS
-<FILL-IN>
+CREATE
+OR REPLACE TEMP VIEW pre_delete_vw AS
+SELECT
+  *
+FROM
+  hive_metastore.euheniy_khvoinitski_5nea_da_dewd.beans VERSION AS OF 4;
 
 -- COMMAND ----------
 
-SELECT * FROM pre_delete_vw
+SELECT
+  *
+FROM
+  pre_delete_vw
 
 -- COMMAND ----------
 
@@ -213,8 +231,14 @@ SELECT * FROM pre_delete_vw
 
 -- COMMAND ----------
 
--- TODO
-<FILL-IN>
+RESTORE TABLE beans VERSION AS OF 5;
+
+-- COMMAND ----------
+
+SELECT
+  *
+FROM
+  beans
 
 -- COMMAND ----------
 
@@ -250,8 +274,12 @@ DESCRIBE HISTORY beans
 
 -- COMMAND ----------
 
--- TODO
-<FILL-IN>
+OPTIMIZE hive_metastore.euheniy_khvoinitski_5nea_da_dewd.beans
+ZORDER BY (name);
+
+-- COMMAND ----------
+
+DESCRIBE HISTORY hive_metastore.euheniy_khvoinitski_5nea_da_dewd.beans;
 
 -- COMMAND ----------
 
@@ -384,7 +412,8 @@ SELECT * FROM beans
 
 -- COMMAND ----------
 
--- SELECT * FROM beans@v1
+SELECT * FROM beans@v1
+-- showed reuslts, that means that it was cached
 
 -- COMMAND ----------
 
@@ -411,6 +440,7 @@ SELECT * FROM beans
 
 -- MAGIC %python
 -- MAGIC DA.cleanup()
+-- MAGIC # need to deep more to liquid clustering
 
 -- COMMAND ----------
 
