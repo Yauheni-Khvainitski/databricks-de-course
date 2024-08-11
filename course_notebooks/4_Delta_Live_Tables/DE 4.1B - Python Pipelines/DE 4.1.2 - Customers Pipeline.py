@@ -56,7 +56,7 @@ source = spark.conf.get("source")
 # COMMAND ----------
 
 @dlt.table(
-    name = "customers_bronze",
+    name = "customers_bronze_python",
     comment = "Raw data from customers CDC feed"
 )
 def ingest_customers_cdc():
@@ -122,9 +122,9 @@ def ingest_customers_cdc():
     rlike(email, '^([a-zA-Z0-9_\\\\-\\\\.]+)@([a-zA-Z0-9_\\\\-\\\\.]+)\\\\.([a-zA-Z]{2,5})$') or 
     operation = "DELETE"
     """)
-def customers_bronze_clean():
+def customers_bronze_clean_python():
     return (
-        dlt.read_stream("customers_bronze")
+        dlt.read_stream("customers_bronze_python")
     )
 
 # COMMAND ----------
@@ -156,11 +156,11 @@ def customers_bronze_clean():
 # COMMAND ----------
 
 dlt.create_target_table(
-    name = "customers_silver")
+    name = "customers_silver_python")
 
 dlt.apply_changes(
-    target = "customers_silver",
-    source = "customers_bronze_clean",
+    target = "customers_silver_python",
+    source = "customers_bronze_clean_python",
     keys = ["customer_id"],
     sequence_by = F.col("timestamp"),
     apply_as_deletes = F.expr("operation = 'DELETE'"),
@@ -184,9 +184,9 @@ dlt.apply_changes(
 
 @dlt.table(
     comment="Total active customers per state")
-def customer_counts_state():
+def customer_counts_state_python():
     return (
-        dlt.read("customers_silver")
+        dlt.read("customers_silver_python")
             .groupBy("state")
             .agg( 
                 F.count("*").alias("customer_count"), 
@@ -225,11 +225,11 @@ def customer_counts_state():
 # COMMAND ----------
 
 @dlt.view
-def subscribed_order_emails_v():
+def subscribed_order_emails_v_python():
     return (
-        dlt.read("orders_silver").filter("notifications = 'Y'").alias("a")
+        dlt.read("orders_silver_python").filter("notifications = 'Y'").alias("a")
             .join(
-                dlt.read("customers_silver").alias("b"), 
+                dlt.read("customers_silver_python").alias("b"), 
                 on="customer_id"
             ).select(
                 "a.customer_id", 
