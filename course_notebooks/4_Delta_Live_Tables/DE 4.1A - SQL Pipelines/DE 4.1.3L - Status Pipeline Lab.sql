@@ -67,12 +67,12 @@ FROM cloud_files("${source}/status", "json");
 CREATE OR REFRESH STREAMING LIVE TABLE status_silver
 (CONSTRAINT valid_timestamp EXPECT (status_timestamp > 1640995200) ON VIOLATION DROP ROW)
 AS SELECT * EXCEPT (source_file, _rescued_data)
-FROM LIVE.status_bronze;
+FROM STREAM(LIVE.status_bronze);
 
 CREATE OR REFRESH LIVE TABLE email_updates
 AS SELECT a.*, b.email
-FROM status_silver a
-INNER JOIN subscribed_order_emails_v b
+FROM LIVE.status_silver AS a
+INNER JOIN LIVE.subscribed_order_emails_v b
 ON a.order_id = b.order_id;
 
 -- COMMAND ----------
