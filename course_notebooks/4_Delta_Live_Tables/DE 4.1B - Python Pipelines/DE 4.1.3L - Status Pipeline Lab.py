@@ -60,11 +60,13 @@
 # COMMAND ----------
 
 # TODO
+import dlt
 import pyspark.sql.functions as F
  
 source = spark.conf.get("source")
- 
-def status_bronze():
+
+@dlt.table
+def status_bronze_python():
     return (
         spark.readStream
             .format("cloudFiles")
@@ -79,22 +81,22 @@ def status_bronze():
  
  
 @dlt.table(
-    table_name = "status_silver"
+    name = "status_silver_python"
     )
 @dlt.expect_or_drop("valid_timestamp", "status_timestamp > 1640995200")
-def status_silver():
+def status_silver_python():
     return (
-        dlt.read_stream("status_bronze")
+        dlt.read_stream("status_bronze_python")
             .drop("source_file", "_rescued_data")
     )
  
  
 @dlt.table
-def email_updates():
+def email_updates_python():
     return (
-        spark.read("status_silver").alias("a")
+        dlt.read("status_silver_python").alias("a")
             .join(
-                dlt.read("subscribed_order_emails_v").alias("b"), 
+                dlt.read("subscribed_order_emails_v_python").alias("b"), 
                 on="order_id"
             ).select(
                 "a.*", 
