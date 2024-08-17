@@ -134,6 +134,8 @@
 # MAGIC   *
 # MAGIC FROM
 # MAGIC   hive_metastore.euheniy_khvoinitski_5nea_da_dewd_pipeline_demo.customers_silver;
+# MAGIC
+# MAGIC -- https://dbc-5dfcd422-972e.cloud.databricks.com#notebook/3138341963253922/command/3138341963253946
 
 # COMMAND ----------
 
