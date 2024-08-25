@@ -1,5 +1,5 @@
 -- Databricks notebook source
--- MAGIC %run ../Includes/Classroom-Setup-05.2.3L
+-- MAGIC %run "/Workspace/Users/euheniy.khvoinitski@gmail.com/Databricks DE Course/DE 5 - Workflow Jobs/Includes/Classroom-Setup-05.2.3L"
 
 -- COMMAND ----------
 

@@ -26,7 +26,7 @@
 
 # COMMAND ----------
 
-# MAGIC %run ../Includes/Classroom-Setup-05.2.1L
+# MAGIC %run "/Workspace/Users/euheniy.khvoinitski@gmail.com/Databricks DE Course/DE 5 - Workflow Jobs/Includes/Classroom-Setup-05.2.1L"
 
 # COMMAND ----------
 
@@ -42,6 +42,15 @@
 # COMMAND ----------
 
 DA.data_factory.load()
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC SELECT
+# MAGIC   input_file_name() source_file,
+# MAGIC   *
+# MAGIC FROM
+# MAGIC   json.`dbfs:/mnt/dbacademy-users/euheniy.khvoinitski@gmail.com/data-engineering-with-databricks/jobs_lab/stream/`
 
 # COMMAND ----------
 
@@ -89,6 +98,14 @@ DA.print_job_config()
 
 # COMMAND ----------
 
+# MAGIC %sql
+# MAGIC SELECT
+# MAGIC   DISTINCT input_file_name() AS source_file
+# MAGIC FROM
+# MAGIC   json.`dbfs:/mnt/dbacademy-users/euheniy.khvoinitski@gmail.com/data-engineering-with-databricks/jobs_lab/stream/`
+
+# COMMAND ----------
+
 # DBTITLE 0,--i18n-4678fc9d-ab2f-4f8c-b4be-a67774b2afd4
 # MAGIC %md
 # MAGIC ## Generate Pipeline
@@ -100,6 +117,14 @@ DA.print_job_config()
 # COMMAND ----------
 
 DA.create_pipeline()
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC SELECT
+# MAGIC   *
+# MAGIC FROM
+# MAGIC   hive_metastore.euheniy_khvoinitski_5nea_da_dewd_jobs_lab.daily_patient_avg;
 
 # COMMAND ----------
 
@@ -161,17 +186,17 @@ DA.create_pipeline()
 
 # This function is provided for students who do not 
 # want to work through the exercise of creating the job.
-DA.create_job()
+# DA.create_job()
 
 # COMMAND ----------
 
-DA.validate_job_config()
+# DA.validate_job_config()
 
 # COMMAND ----------
 
 # This function is provided to start the job and  
 # block until it has completed, canceled or failed
-DA.start_job()
+# DA.start_job()
 
 # COMMAND ----------
 
